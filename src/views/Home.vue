@@ -1,18 +1,32 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Simple Contacts App</h1>
+    <div v-for="contact in contacts" :key="contact.id">
+      <p> {{ contact }} </p>
+    </div>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<style></style>
 
+<script>
+import axios from "axios";
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+  data: function () {
+    return {
+      contacts: [],
+    };
+  },
+  created: function () {
+    this.contactIndex();
+  },
+  methods: {
+    contactIndex: function () {
+      axios.get("contacts").then((response) => {
+        this.contacts = response.data;
+        console.log(response.data);
+      });
+    },
+  },
+};
 </script>
